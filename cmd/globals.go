@@ -417,7 +417,7 @@ var (
 	globalLocalDrivesMap map[string]StorageAPI
 	globalLocalDrivesMu  sync.RWMutex
 
-	globalDriveMonitoring = env.Get("_MINIO_DRIVE_ACTIVE_MONITORING", config.EnableOn) == config.EnableOn
+	globalDriveMonitoring = env.Get("_MINIO_DRIVE_ACTIVE_MONITORING", config.EnableOn) == config.EnableOn && !globalIdleDrives
 
 	// Is MINIO_CI_CD set?
 	globalIsCICD bool

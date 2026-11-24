@@ -469,11 +469,13 @@ func newErasureSets(ctx context.Context, endpoints PoolEndpoints, storageDisks [
 
 	wg.Wait()
 
-	// start cleanup stale uploads go-routine.
-	go s.cleanupStaleUploads(ctx)
+	if !globalIdleDrives {
+		// start cleanup stale uploads go-routine.
+		go s.cleanupStaleUploads(ctx)
 
-	// start cleanup of deleted objects.
-	go s.cleanupDeletedObjects(ctx)
+		// start cleanup of deleted objects.
+		go s.cleanupDeletedObjects(ctx)
+	}
 
 	// Start the disk monitoring and connect routine.
 	if !globalIsTesting {

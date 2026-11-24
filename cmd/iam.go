@@ -477,6 +477,12 @@ func (sys *IAMSys) periodicRoutines(ctx context.Context, baseInterval time.Durat
 	for {
 		select {
 		case <-timer.C:
+			if globalIdleDrives && !isWatcher {
+				// The reload would read IAM config from the drives.
+				timer.Reset(waitInterval())
+				continue
+			}
+
 			// Load all IAM items (except STS creds) periodically.
 			refreshStart := time.Now()
 			if err := sys.Load(ctx, false); err != nil {

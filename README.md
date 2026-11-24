@@ -40,6 +40,19 @@ It follows one rule: **the product and its delivery surfaces are renamed; the pr
 
 **Related:** [`pgsty/mc`](https://github.com/pgsty/mc) · [`pgsty/silo-console`](https://github.com/pgsty/silo-console) · [`pgsty/silo-pkg`](https://github.com/pgsty/silo-pkg) · [`pgsty/kes`](https://github.com/pgsty/kes) · [`pgsty/pigsty`](https://github.com/pgsty/pigsty)
 
+## Personal fork goal
+
+This fork aims to keep bucket data on a dedicated Docker volume that can stay
+powered down for as long as possible, and be accessed only for direct user
+operations such as a backup or restore. `SILO_IDLE_DRIVES=on` currently gates
+the data scanner, periodic drive health probes, auto-drive-heal monitoring,
+scheduled `.trash` and stale-upload cleanup, and drive-backed periodic IAM
+reloads. This is only a partial measure; it does not suppress all startup or
+other background I/O. It does not power disks down or fully separate Silo's
+system metadata from bucket data: the storage drives still need to be available
+at server startup. Docker/host storage configuration must provide the separate
+volume and manage its power state.
+
 <p align="center">
   <img src="https://silo.pgsty.com/images/silo-console/console-metrics-simple.webp" alt="Silo Console">
 </p>

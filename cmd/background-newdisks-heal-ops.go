@@ -377,7 +377,7 @@ func initAutoHeal(ctx context.Context, objAPI ObjectLayer) {
 	}
 
 	initBackgroundHealing(ctx, objAPI) // start quick background healing
-	if env.Get("_MINIO_AUTO_DRIVE_HEALING", config.EnableOn) == config.EnableOn {
+	if env.Get("_MINIO_AUTO_DRIVE_HEALING", config.EnableOn) == config.EnableOn && !globalIdleDrives {
 		globalBackgroundHealState.pushHealLocalDisks(getLocalDisksToHeal()...)
 		go monitorLocalDisksAndHeal(ctx, z)
 	}

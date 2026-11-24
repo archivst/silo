@@ -1053,7 +1053,7 @@ func serverMain(ctx *cli.Context) {
 
 		// Initialize data scanner.
 		bootstrapTrace("initDataScanner", func() {
-			if v := env.Get("_MINIO_SCANNER", config.EnableOn); v == config.EnableOn {
+			if v := env.Get("_MINIO_SCANNER", config.EnableOn); v == config.EnableOn && !globalIdleDrives {
 				initDataScanner(GlobalContext, newObject)
 			}
 		})
